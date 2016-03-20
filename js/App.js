@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from './components/Button';
+import "./../sass/main.scss";
 
 
 export default class App extends Component {
