@@ -14,7 +14,6 @@ export default class App extends Component {
       phrase: 'Нажми на кнопку!',
       count: 0,
       nameWay: true,
-      ageWay: true,
       usersData: [{
         id: 4,
         name: 'Wayne Joseph',
@@ -46,27 +45,24 @@ export default class App extends Component {
        });
   }
 
-  sortName = () => {
+  sortNames = (e) => {
+    const kind = e.target.getAttribute('data-kind');
     const way = this.state.nameWay ? 1 : -1;
-    const names = this.state.usersData.sort((a, b) => {
-      if (a.name > b.name) {
+    const sortedByNames = this.state.usersData.sort((a, b) => {
+      if (a[kind] > b[kind]) {
         return way;
       }
-      if (a.name < b.name) {
+      if (a[kind] < b[kind]) {
         return -way;
       }
       return 0;
     });
 
     this.setState({
-      usersData: names,
+      usersData: sortedByNames,
       nameWay: !this.state.nameWay
     });
     console.log('SortName');
-  }
-
-  sortAge = () => {
-    console.log('SortAge');
   }
 
   updateBtn = () => {
@@ -104,7 +100,7 @@ export default class App extends Component {
     return (
       <div className="container app">
         <SearchBar />
-        <Toolbar sortName={this.sortName} sortAge={this.sortAge} />
+        <Toolbar sortNames={this.sortNames} />
         <Button count={this.state.count} update={this.updateBtn} />
         <p style={{ marginTop: '2rem' }}>{this.state.phrase}</p>
         <UserList users={this.state.usersData} />
