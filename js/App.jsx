@@ -13,6 +13,8 @@ export default class App extends Component {
     this.state = {
       phrase: 'Нажми на кнопку!',
       count: 0,
+      nameWay: true,
+      ageWay: true,
       usersData: [{
         id: 4,
         name: 'Wayne Joseph',
@@ -21,7 +23,6 @@ export default class App extends Component {
         image: 'fox',
         phrase: 'Win ijaj.'
       }],
-      usersDataRaw: [],
       curUserId: []
     };
     this.loadUsersData();
@@ -35,7 +36,6 @@ export default class App extends Component {
              curUserId = data.data[0].id;
            }
            this.setState({
-             usersDataRaw: data.data,
              usersData: data.data,
              curUserId
            });
@@ -44,6 +44,29 @@ export default class App extends Component {
          console.log('get data error');
          console.log(response);
        });
+  }
+
+  sortName = () => {
+    const way = this.state.nameWay ? 1 : -1;
+    const names = this.state.usersData.sort((a, b) => {
+      if (a.name > b.name) {
+        return way;
+      }
+      if (a.name < b.name) {
+        return -way;
+      }
+      return 0;
+    });
+
+    this.setState({
+      usersData: names,
+      nameWay: !this.state.nameWay
+    });
+    console.log('SortName');
+  }
+
+  sortAge = () => {
+    console.log('SortAge');
   }
 
   updateBtn = () => {
@@ -78,11 +101,10 @@ export default class App extends Component {
   }
 
   render() {
-    // console.log(this.state.usersData[0]);
     return (
       <div className="container app">
         <SearchBar />
-        <Toolbar />
+        <Toolbar sortName={this.sortName} sortAge={this.sortAge} />
         <Button count={this.state.count} update={this.updateBtn} />
         <p style={{ marginTop: '2rem' }}>{this.state.phrase}</p>
         <UserList users={this.state.usersData} />
