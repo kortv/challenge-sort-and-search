@@ -4,6 +4,7 @@ import axios from 'axios';
 import './../sass/main.scss';
 import UserList from './components/UserList';
 import Toolbar from './components/Toolbar';
+import SearchBar from './components/SearchBar';
 
 
 export default class App extends Component {
@@ -80,6 +81,7 @@ export default class App extends Component {
     // console.log(this.state.usersData[0]);
     return (
       <div className="container app">
+        <SearchBar />
         <Toolbar />
         <Button count={this.state.count} update={this.updateBtn} />
         <p style={{ marginTop: '2rem' }}>{this.state.phrase}</p>
